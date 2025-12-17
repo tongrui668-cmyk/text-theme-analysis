@@ -1,0 +1,50 @@
+# 依赖包和虚拟环境
+__pycache__/
+*.pyc
+.venv/
+.env/
+.env.local
+.env.*.local
+.conda/
+
+# 日志文件
+logs/
+*.log
+
+# 数据文件
+# 如果数据文件包含敏感信息或过大，建议不提交到GitHub
+data/raw/
+!data/raw/chinese_stopwords.txt
+!data/raw/停用词表.txt
+
+# IDE配置
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# 操作系统文件
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# 测试文件
+*.test.py
+
+# 构建文件
+build/
+dist/
+*.egg-info/
+
+# 缓存文件
+.cache/
+.temp/
+
+# 报告文件
+static/reports/*.png

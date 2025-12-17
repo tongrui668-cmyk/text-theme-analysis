@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主题分类工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 30px;
+        }
+        .upload-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+            transition: border-color 0.3s;
+        }
+        input[type="file"]:hover {
+            border-color: #007bff;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+        .success-message {
+            color: #155724;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+        .file-info {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .file-info h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .file-info ul {
+            text-align: left;
+            margin: 10px 0;
+        }
+        .file-info li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 主题分类工具</h1>
+
+        <!-- 显示消息 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- 文件格式说明 -->
+        <div class="file-info">
+            <h3>📁 支持的文件格式</h3>
+            <ul>
+                <li><strong>文本文件 (.txt)</strong>：纯文本格式，包含需要分析的评论内容</li>
+                <li><strong>Excel文件 (.xlsx, .xls)</strong>：包含评论数据的表格，系统会自动识别文本列</li>
+                <li><strong>CSV文件 (.csv)</strong>：逗号分隔值文件，系统会自动识别文本列</li>
+            </ul>
+            <p><strong>注意：</strong>文件大小建议不超过10MB，文本内容建议使用UTF-8编码</p>
+        </div>
+
+        <!-- 文件上传表单 -->
+        <div class="upload-section">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label for="file"><strong>选择要分析的文件：</strong></label><br><br>
+                <input type="file" name="file" id="file" required 
+                       accept=".txt,.xlsx,.xls,.csv">
+                <br>
+                <button type="submit">🚀 开始分析</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

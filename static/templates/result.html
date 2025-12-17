@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本主题分析结果</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            background-color: #f8f9fa;
+            margin: 25px 0;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+        .section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h2::before {
+            content: "📊";
+            font-size: 1.2rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .theme-item {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .theme-item:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .theme-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .theme-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .theme-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .theme-count:hover {
+            background: #5a6fd8;
+            transform: scale(1.05);
+        }
+        .theme-count::after {
+            content: " 🔍";
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        .keyword-tag {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin: 3px;
+            font-weight: 500;
+        }
+        .example-item {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .example-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .confidence-bar {
+            margin: 10px 0;
+        }
+        .confidence-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .confidence-progress {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc3545, #ffc107, #28a745);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        .sample-results {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .sample-results h3 {
+            color: #856404;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sample-results h3::before {
+            content: "🔍";
+        }
+        .result-item {
+            background: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .result-theme {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        .result-confidence {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .confidence-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .confidence-high {
+            background: #d4edda;
+            color: #155724;
+        }
+        .confidence-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .confidence-low {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .back-button {
+            display: block;
+            margin: 30px auto;
+            text-align: center;
+        }
+        .back-button a {
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .back-button a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+        }
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #0c5460;
+        }
+        .info-box strong {
+            color: #0c5460;
+        }
+        .examples-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #e9ecef;
+            display: none;
+        }
+        .examples-section.show {
+            display: block;
+        }
+        .examples-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .close-examples {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s ease;
+        }
+        .close-examples:hover {
+            background: #5a6268;
+        }
+        .deduplication-info {
+            background: #f0f9ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .deduplication-info h4 {
+            margin: 0 0 10px 0;
+            color: #1e40af;
+        }
+        .deduplication-info p {
+            margin: 5px 0;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 文本主题分析结果</h1>
+            <p>基于机器学习的智能文本分析报告</p>
+        </div>
+
+        <div class="content">
+            <!-- 分析摘要 -->
+            <div class="section">
+                <h2>📋 分析摘要</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">{{ result.total_texts }}</div>
+                        <div class="stat-label">总文本数量</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ result.successful_analyses }}</div>
+                        <div class="stat-label">成功分析数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ result.themes_count|length if result.themes_count else 0 }}</div>
+                        <div class="stat-label">识别主题数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">{{ "%.1f"|format((result.successful_analyses / result.total_texts * 100) if result.total_texts > 0 else 0) }}%</div>
+                        <div class="stat-label">分析成功率</div>
+                    </div>
+                </div>
+                
+                <!-- 数据处理说明 -->
+                <div class="deduplication-info">
+                    <h4>🔍 数据处理说明</h4>
+                    <p>• 系统已自动过滤长度≤5字符的无效文本</p>
+                    <p>• 已移除重复评论内容，确保分析结果准确性</p>
+                    <p>• 主题分类基于LDA模型和关键词匹配算法</p>
+                </div>
+            </div>
+
+            <!-- 主题分布统计 -->
+            {% if result.themes_count %}
+            <div class="section">
+                <h2>🎨 主题分布统计</h2>
+                <p style="color: #6c757d; margin-bottom: 20px;">
+                    💡 <strong>提示：</strong>点击主题数量可查看该主题的5条示例评论
+                </p>
+                {% for theme, count in result.themes_count.items() %}
+                <div class="theme-item">
+                    <div class="theme-header">
+                        <div class="theme-name">
+                            {% if result.theme_names and theme in result.theme_names %}
+                                {{ result.theme_names[theme] }}
+                            {% else %}
+                                主题 {{ theme }}
+                            {% endif %}
+                        </div>
+                        <div class="theme-count" onclick="toggleExamples('{{ theme }}')">{{ count }} 条</div>
+                    </div>
+                    {% if result.theme_keywords and theme in result.theme_keywords %}
+                    <div style="margin-top: 10px;">
+                        <strong style="color: #6c757d;">🏷️ 关键词：</strong>
+                        {% for keyword in result.theme_keywords[theme] %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- 隐藏的示例评论区域 -->
+                    {% if result.theme_examples and theme in result.theme_examples %}
+                    <div id="examples-{{ theme }}" class="examples-section">
+                        <div class="examples-header">
+                            <span>📝 {{ result.theme_names[theme] if result.theme_names and theme in result.theme_names else '主题 ' + theme }} - 示例评论（前5条）</span>
+                            <button class="close-examples" onclick="toggleExamples('{{ theme }}')">收起</button>
+                        </div>
+                        {% for example in result.theme_examples[theme][:5] %}
+                        <div class="example-item">
+                            <div class="example-content">
+                                "{{ example.text }}"
+                            </div>
+                            <div class="confidence-bar">
+                                <div class="confidence-label">
+                                    <span>置信度</span>
+                                    <span>{{ "%.1f"|format(example.confidence * 100) }}%</span>
+                                </div>
+                                <div class="confidence-progress">
+                                    <div class="confidence-fill" style="width: {{ example.confidence * 100 }}%"></div>
+                                </div>
+                            </div>
+                            {% if example.keywords %}
+                            <div style="margin-top: 10px;">
+                                <strong style="color: #6c757d;">🔑 关键词：</strong>
+                                {% for keyword in example.keywords %}
+                                <span class="keyword-tag">{{ keyword }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- 样本分析结果展示 -->
+            {% if result.results %}
+            <div class="sample-results">
+                <h3>📊 样本分析结果（前10条）</h3>
+                <div class="info-box">
+                    <strong>说明：</strong>这里展示的是您上传文件中前10条文本的分析结果，帮助您了解系统的分析效果。
+                    <strong>置信度</strong>表示系统对该分类结果的确定程度，越高越可靠。
+                </div>
+                {% for item in result.results[:10] %}
+                {% if item.success %}
+                <div class="result-item">
+                    <div class="result-theme">
+                        {% if result.theme_names and item.theme in result.theme_names %}
+                            {{ result.theme_names[item.theme] }}
+                        {% else %}
+                            {{ item.theme }}
+                        {% endif %}
+                    </div>
+                    <div class="result-confidence">
+                        <span>{{ "%.1f"|format(item.confidence * 100) }}%</span>
+                        <span class="confidence-badge {{ 'confidence-high' if item.confidence >= 0.8 else ('confidence-medium' if item.confidence >= 0.6 else 'confidence-low') }}">
+                            {{ '高' if item.confidence >= 0.8 else ('中' if item.confidence >= 0.6 else '低') }}
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- 单条结果展示 -->
+            {% if result.single_result %}
+            <div class="section">
+                <h2>🎯 分析结果</h2>
+                <div class="theme-item">
+                    <div class="theme-header">
+                        <div class="theme-name">
+                            {% if result.theme_names and result.single_result.theme in result.theme_names %}
+                                {{ result.theme_names[result.single_result.theme] }}
+                            {% else %}
+                                {{ result.single_result.theme }}
+                            {% endif %}
+                        </div>
+                        <div class="theme-count">{{ "%.1f"|format(result.single_result.confidence * 100) }}%</div>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-label">
+                            <span>置信度</span>
+                            <span>{{ "%.1f"|format(result.single_result.confidence * 100) }}%</span>
+                        </div>
+                        <div class="confidence-progress">
+                            <div class="confidence-fill" style="width: {{ result.single_result.confidence * 100 }}%"></div>
+                        </div>
+                    </div>
+                    {% if result.single_result.keywords %}
+                    <div style="margin-top: 15px;">
+                        <strong style="color: #6c757d;">🔑 关键词：</strong>
+                        {% for keyword in result.single_result.keywords %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 返回首页按钮 -->
+            <div class="back-button">
+                <a href="/">🏠 返回首页继续分析</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleExamples(themeId) {
+            const examplesSection = document.getElementById('examples-' + themeId);
+            if (examplesSection) {
+                examplesSection.classList.toggle('show');
+                
+                // 滚动到示例区域
+                if (examplesSection.classList.contains('show')) {
+                    setTimeout(() => {
+                        examplesSection.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest' 
+                        });
+                    }, 100);
+                }
+            }
+        }
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有主题数量按钮添加点击效果
+            const themeCounts = document.querySelectorAll('.theme-count');
+            themeCounts.forEach(count => {
+                count.addEventListener('click', function() {
+                    // 添加点击动画效果
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 100);
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
