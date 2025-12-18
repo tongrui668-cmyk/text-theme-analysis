@@ -1,30 +1,19 @@
-# 🎯 中文文本主题分析平台
+# 文本主题分析工具
 
-一个基于机器学习的中文文本主题分类与分析Web应用，支持批量文本处理、实时主题预测和可视化分析结果展示。   
+一个基于机器学习的中文文本主题分析系统，支持文本分类、关键词提取和可视化分析。
 
-## 🔗 项目链接
+## 📋 项目简介
 
-- **GitHub仓库**: [https://github.com/tongrui668-cmyk/text-theme-analysis](https://github.com/tongrui668-cmyk/text-theme-analysis)
-- **在线演示**: （可选：如果部署到线上平台，添加访问链接）
-
-## 📸 项目截图
-
-### 主页界面
-![主页界面](static/images/主页界面.png)
-
-### 分析结果页面
-![结果界面1](static/images/结果界面1.png)
-![结果界面2](static/images/结果界面2.png)
-![结果界面3](static/images/结果界面3.png)
-![结果界面4](static/images/结果界面4.png)
+文本主题分析工具是一个基于Python和Flask开发的Web应用，使用LDA主题模型和机器学习算法对中文文本进行自动分类和分析。该工具支持单条文本输入和批量文件上传，提供直观的可视化分析结果。
 
 ## ✨ 功能特性
 
-- **批量文本处理**: 支持Excel、CSV、TXT等多种格式文件上传与分析，单次可处理10万+条文本
-- **实时主题预测**: 提供在线文本输入框，实时返回主题分类结果和置信度
+- **中文文本分析**: 支持对中文文本进行主题分类和关键词提取
+- **批量处理**: 支持上传TXT/CSV文件进行批量文本分析
+- **实时分析**: 提供文本输入框，实时返回主题分类结果和置信度
 - **可视化分析结果**: 直观展示主题分布、关键词统计和示例文本分析
 - **高性能处理**: 采用并行计算技术，响应时间<1秒
-- **高准确率**: 基于LDA主题模型和机器学习分类器，准确率达90%+
+- **高准确率**: 基于LDA主题模型和机器学习分类器，准确率达90%+ 
 - **响应式设计**: 适配桌面、平板和移动设备
 
 ## 🏗️ 技术栈
@@ -98,83 +87,95 @@ python run.py
 │   └── config.py        # 配置文件
 ├── static/              # 静态资源
 │   ├── css/             # CSS样式
-│   ├── js/              # JavaScript
-│   ├── images/          # 图片资源
+│   ├── js/              # JavaScript代码
+│   ├── images/          # 项目图片
 │   └── templates/       # HTML模板
 ├── data/                # 数据目录
-│   ├── models/          # 模型文件
-│   └── processed/       # 处理后数据
-├── training/            # 模型训练代码
-├── run.py               # 启动脚本
+│   └── models/          # 预训练模型文件
+├── training/            # 模型训练目录
+│   ├── train_lda_model.py # LDA模型训练脚本
+│   ├── train_theme_model.py # 主题分类模型训练脚本
+│   ├── data_preprocessor.py # 数据预处理脚本
+│   ├── custom_dict.txt  # 自定义词典
+│   └── train_log.txt    # 训练日志
+├── logs/                # 日志目录
 ├── requirements.txt     # 依赖列表
-├── README.md            # 项目说明
-└── LICENSE              # 许可证
+├── run.py               # 项目启动文件
+├── .gitignore           # Git忽略文件
+└── LICENSE              # 许可证文件
 ```
 
-## 📊 功能说明
+## 📊 预训练模型
 
-### 文件上传与处理
+项目提供了完整的预训练模型，用户下载后无需重新训练即可直接使用。所有模型文件位于 `data/models/` 目录下：
 
-支持多种格式文件上传:
-- **Excel**: .xlsx, .xls
-- **CSV**: .csv
-- **文本**: .txt
+| 模型文件 | 用途 |
+|---------|------|
+| `lda_model.pkl` | LDA主题模型，用于文本主题提取 |
+| `theme_classification_model.pkl` | 主题分类器，用于文本主题分类 |
+| `vectorizer.pkl` | TF-IDF向量转换器，用于文本特征提取 |
+| `count_vectorizer.pkl` | 词频向量转换器，用于文本向量化 |
+| `theme_keywords.pkl` | 主题关键词映射表 |
 
-系统会自动:
-1. 解析文件内容
-2. 提取文本数据
-3. 去重和过滤(保留长度>5的文本)
-4. 进行主题分析
-5. 生成可视化报告
+## 🛠️ 模型训练
 
-### 实时文本分析
+如果您需要重新训练模型或使用自己的数据集，可以使用 `training/` 目录下的训练脚本：
 
-提供简洁的文本输入框，支持:
-- 实时主题预测
-- 置信度显示
-- 关键词提取
-- 分析结果复制
+### 训练文件说明
 
-### 分析报告
+`training/` 目录包含所有用于模型训练的脚本和资源文件：
 
-生成详细的分析报告，包括:
-- 主题分布统计
-- 每个主题的关键词
-- 示例文本分析
-- 数据质量统计
+| 文件名 | 用途 |
+|-------|------|
+| `train_lda_model.py` | LDA主题模型训练脚本 |
+| `train_theme_model.py` | 主题分类模型训练脚本 |
+| `data_preprocessor.py` | 数据预处理脚本 |
+| `lad_analyze.py` | LDA主题分析辅助脚本 |
+| `pretread.py` | 文本预处理辅助脚本 |
+| `custom_dict.txt` | 自定义词典，用于优化分词结果 |
+| `train_log.txt` | 训练过程日志记录 |
 
-## 🛠️ 开发指南
+### 训练步骤
 
-### 代码结构
+1. **数据准备**
+   - 将训练数据放在 `training/` 目录下
+   - 数据格式：每行一条文本
+   - 支持TXT和CSV格式
 
-- **src/app.py**: 应用初始化和配置
-- **src/routes.py**: API路由和视图函数
-- **src/services.py**: 业务逻辑层
-- **src/model_manager.py**: 模型加载和预测
-- **src/text_preprocessor.py**: 文本预处理
+2. **预处理数据**
+   ```bash
+   python training/data_preprocessor.py
+   ```
 
-### 模型训练
+3. **训练LDA主题模型**
+   ```bash
+   python training/train_lda_model.py
+   ```
 
-1. 准备训练数据
-2. 运行 `training/train_lda_model.py` 训练LDA模型
-3. 运行 `training/train_theme_model.py` 训练主题分类器
-4. 模型文件将保存在 `data/models/` 目录
+4. **训练主题分类模型**
+   ```bash
+   python training/train_theme_model.py
+   ```
 
-### 自定义配置
+5. **查看训练日志**
+   ```bash
+   # Windows
+   type training/train_log.txt
+   
+   # Linux/macOS
+   cat training/train_log.txt
+   ```
 
-修改 `src/config.py` 文件可配置:
-- 应用端口和调试模式
-- 模型文件路径
-- 文本处理参数
-- 日志配置
+训练完成后，新的模型文件将自动保存到 `data/models/` 目录下，覆盖原有的预训练模型。
 
-### 添加新功能
+## ⚙️ 配置
 
-1. **添加路由**: 在 `src/routes.py` 中添加新的蓝图和路由
-2. **实现逻辑**: 在 `src/services.py` 中实现业务逻辑
-3. **添加视图**: 在 `static/templates/` 中添加HTML模板
-4. **更新样式**: 在 `static/css/` 中添加CSS样式
-5. **添加交互**: 在 `static/js/` 中添加JavaScript代码
+应用配置文件位于 `src/config.py`，可以修改以下参数：
+
+- **应用配置**: 端口、调试模式
+- **模型配置**: 模型文件路径、主题数量
+- **文本处理**: 分词器配置、停用词列表
+- **日志配置**: 日志级别、日志文件路径
 
 ## 🔧 部署
 
@@ -211,19 +212,6 @@ CMD ["python", "run.py"]
 
 日志文件位置: `logs/app.log`
 
-## 🧪 测试
-
-```bash
-# 运行所有测试
-python -m pytest tests/
-
-# 运行特定测试
-python -m pytest tests/test_model_manager.py
-
-# 生成覆盖率报告
-python -m pytest --cov=src tests/
-```
-
 ## 🤝 贡献指南
 
 1. Fork项目
@@ -249,7 +237,4 @@ python -m pytest --cov=src tests/
 
 - [jieba](https://github.com/fxsjy/jieba) - 中文分词库
 - [scikit-learn](https://scikit-learn.org/) - 机器学习库
-- [Flask](https://flask.palletsprojects.com/) - Web框架
-- [pandas](https://pandas.pydata.org/) - 数据处理库
-
-**最后更新**: 2025年11月20日
+- [Flask](https://flask.palletsprojects.com/) - Web应用框架
