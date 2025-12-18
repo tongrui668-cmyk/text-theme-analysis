@@ -1,1 +1,258 @@
-﻿</html>
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析结果 - 文本主题分析工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #495057;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .summary {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .summary-item {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .summary-item strong {
+            color: #007bff;
+        }
+        .theme-distribution {
+            margin: 20px 0;
+        }
+        .theme-item {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 5px solid #007bff;
+        }
+        .theme-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .theme-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #343a40;
+        }
+        .theme-count {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .theme-percentage {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .theme-keywords {
+            margin: 10px 0;
+        }
+        .keyword {
+            background-color: #007bff;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin: 3px;
+            font-size: 14px;
+            display: inline-block;
+        }
+        .theme-examples {
+            margin-top: 15px;
+        }
+        .example-text {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #dee2e6;
+        }
+        .example-text p {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .example-confidence {
+            color: #28a745;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .result-list {
+            margin-top: 20px;
+        }
+        .result-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .result-item p {
+            margin: 5px 0;
+        }
+        .back-button {
+            display: inline-block;
+            background-color: #6c757d;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .empty-result {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+            font-size: 18px;
+        }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 文本主题分析结果</h1>
+
+        <!-- 分析结果摘要 -->
+        {% if result %}
+            <div class="summary">
+                <h2>📋 分析摘要</h2>
+                <div class="summary-item">
+                    <strong>文件名:</strong> {{ result.filename }}
+                </div>
+                <div class="summary-item">
+                    <strong>总文本数:</strong> {{ result.total_texts }}
+                </div>
+                <div class="summary-item">
+                    <strong>成功分析数:</strong> {{ result.successful_analyses }}
+                </div>
+                <div class="summary-item">
+                    <strong>分析成功率:</strong> {{ "{:.1f}%"|format(result.successful_analyses / result.total_texts * 100) }}
+                </div>
+            </div>
+
+            <!-- 主题分布 -->
+            {% if result.themes_count %}
+                <div class="theme-distribution">
+                    <h2>🎯 主题分布</h2>
+                    {% for theme, count in result.themes_count.items() %}
+                        <div class="theme-item">
+                            <div class="theme-header">
+                                <div>
+                                    <span class="theme-name">{{ result.theme_names.get(theme, theme) }}</span>
+                                    <span class="theme-percentage">
+                                        ({{ "{:.1f}%"|format(count / result.successful_analyses * 100) }})
+                                    </span>
+                                </div>
+                                <span class="theme-count">{{ count }}条</span>
+                            </div>
+
+                            <!-- 主题关键词 -->
+                            {% if result.theme_keywords.get(theme) %}
+                                <div class="theme-keywords">
+                                    <strong>关键词:</strong>
+                                    {% for keyword in result.theme_keywords.get(theme, []) %}
+                                        <span class="keyword">{{ keyword }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- 主题示例评论 -->
+                            {% if result.theme_examples.get(theme) %}
+                                <div class="theme-examples">
+                                    <strong>示例评论:</strong>
+                                    {% for example in result.theme_examples.get(theme, [])[:5] %}
+                                        <div class="example-text">
+                                            <p>{{ example.text[:200] }}{% if example.text|length > 200 %}...{% endif %}</p>
+                                            <div class="example-confidence">
+                                                置信度: {{ "{:.2f}%"|format(example.confidence * 100) }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- 部分分析结果 -->
+            {% if result.results %}
+                <div class="result-list">
+                    <h2>📝 部分分析结果</h2>
+                    {% for item in result.results %}
+                        {% if item.success %}
+                            <div class="result-item">
+                                <p><strong>文本:</strong> {{ item.original_text[:100] }}{% if item.original_text|length > 100 %}...{% endif %}</p>
+                                <p><strong>主题:</strong> {{ result.theme_names.get(item.theme, item.theme) }}</p>
+                                <p><strong>置信度:</strong> {{ "{:.2f}%"|format(item.confidence * 100) }}</p>
+                                {% if item.keywords %}
+                                    <p><strong>关键词:</strong> {{ item.keywords[:5]|join(', ') }}{% if item.keywords|length > 5 %}...{% endif %}</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% if result.show_all %}
+                        <div style="text-align: center; margin-top: 20px;">
+                            <strong>显示前{{ result.results|length }}条结果，共{{ result.successful_analyses }}条</strong>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <!-- 返回按钮 -->
+            <div style="text-align: center;">
+                <a href="/" class="back-button">🔄 返回重新分析</a>
+            </div>
+        {% else %}
+            <div class="empty-result">
+                <h2>❌ 没有分析结果</h2>
+                <p>可能是文件处理失败或文件中没有有效的文本内容</p>
+                <a href="/" class="back-button">🔄 返回重新上传</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
