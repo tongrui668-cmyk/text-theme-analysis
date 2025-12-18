@@ -393,27 +393,47 @@ class ModelManager:
         Returns:
             分析结果列表
         """
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+        
         results = []
-        for i, text in enumerate(texts):
+        batch_size = 500  # 每批处理的文本数量
+        total = len(texts)
+        processed = 0
+        
+        # 使用线程池并行处理
+        def process_text(text, index):
             try:
                 result = self.predict_theme(text)
-                result['text_index'] = i
+                result['text_index'] = index
                 result['original_text'] = text[:100] + "..." if len(text) > 100 else text
-                results.append(result)
-                
-                if (i + 1) % 10 == 0:
-                    log_info(f"已分析 {i + 1}/{len(texts)} 条文本")
-                    
+                return result
             except Exception as e:
-                log_error(e, f"分析第{i+1}条文本失败")
-                results.append({
-                    'text_index': i,
+                log_error(e, f"分析第{index+1}条文本失败")
+                return {
+                    'text_index': index,
                     'original_text': text[:100] + "..." if len(text) > 100 else text,
                     'success': False,
                     'error': str(e),
                     'theme': None,
                     'confidence': 0.0
-                })
+                }
+        
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            # 提交所有任务
+            futures = {executor.submit(process_text, text, i): i for i, text in enumerate(texts)}
+            
+            # 收集结果
+            for future in as_completed(futures):
+                result = future.result()
+                results.append(result)
+                processed += 1
+                
+                # 每处理100条记录日志
+                if processed % 100 == 0:
+                    log_info(f"已分析 {processed}/{total} 条文本")
+        
+        # 按原始顺序排序结果
+        results.sort(key=lambda x: x['text_index'])
         
         return results
     
