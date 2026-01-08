@@ -3,7 +3,6 @@
 提供统一的文本清洗、分词和预处理功能
 """
 import re
-import jieba
 import pandas as pd
 from typing import List, Optional, Union
 from pathlib import Path
@@ -26,6 +25,7 @@ class TextPreprocessor:
         self.stopwords = self._load_stopwords()
         self.thulac_model = None
         self.thulac = None  # thulac模块引用
+        self.jieba = None  # jieba模块引用
         
         # 初始化分词器
         self._init_segmenter()
@@ -48,16 +48,18 @@ class TextPreprocessor:
                     self.segmenter = 'jieba'
                     
                     # 加载自定义词典（如果存在）
+                    self._import_jieba()
                     custom_dict_path = config['default'].DATA_PATHS.get('custom_dict')
                     if custom_dict_path and custom_dict_path.exists():
-                        jieba.load_userdict(str(custom_dict_path))
+                        self.jieba.load_userdict(str(custom_dict_path))
                         self.logger.info(f"加载自定义词典: {custom_dict_path}")
                     self.logger.info("jieba分词器初始化成功")
             elif self.segmenter == 'jieba':
                 # 加载自定义词典（如果存在）
+                self._import_jieba()
                 custom_dict_path = config['default'].DATA_PATHS.get('custom_dict')
                 if custom_dict_path and custom_dict_path.exists():
-                    jieba.load_userdict(str(custom_dict_path))
+                    self.jieba.load_userdict(str(custom_dict_path))
                     self.logger.info(f"加载自定义词典: {custom_dict_path}")
                 self.logger.info("jieba分词器初始化成功")
             else:
@@ -67,6 +69,16 @@ class TextPreprocessor:
             # 回退到jieba
             self.segmenter = 'jieba'
             self.logger.warning("回退到jieba分词器")
+    
+    def _import_jieba(self):
+        """延迟导入jieba模块"""
+        try:
+            if self.jieba is None:
+                import jieba
+                self.jieba = jieba
+        except ImportError as e:
+            self.logger.warning(f"jieba模块导入失败: {e}")
+            self.jieba = None
     
     @log_function_call
     def _load_stopwords(self) -> set:
@@ -156,7 +168,12 @@ class TextPreprocessor:
                 words = [word for word, _ in result]
             else:
                 # jieba分词
-                words = list(jieba.cut(text))
+                self._import_jieba()
+                if self.jieba:
+                    words = list(self.jieba.cut(text))
+                else:
+                    # 如果jieba也导入失败，使用简单分词
+                    words = list(text)
             
             return words
         except Exception as e:

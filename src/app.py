@@ -37,6 +37,9 @@ def create_app(config_name='development'):
     upload_folder = Path(app.config['UPLOAD_FOLDER'])
     upload_folder.mkdir(parents=True, exist_ok=True)
     
+    # 增加超时设置
+    app.config['UPLOAD_TIMEOUT'] = 300  # 设置上传超时时间为300秒
+    
     # 注册蓝图
     app.register_blueprint(main_bp)
     

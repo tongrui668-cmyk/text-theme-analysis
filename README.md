@@ -1,6 +1,6 @@
-# 文本主题分析工具
+# 🎯 中文文本主题分析平台
 
-一个基于机器学习的中文文本主题分析系统，支持文本分类、关键词提取和可视化分析。
+一个基于机器学习的中文文本主题分类与分析Web应用，支持批量文本处理、实时主题预测和可视化分析结果展示。
 
 ## 📋 项目简介
 
@@ -8,176 +8,229 @@
 
 ## ✨ 功能特性
 
-- **中文文本分析**: 支持对中文文本进行主题分类和关键词提取
-- **批量处理**: 支持上传TXT/CSV文件进行批量文本分析
-- **实时分析**: 提供文本输入框，实时返回主题分类结果和置信度
-- **可视化分析结果**: 直观展示主题分布、关键词统计和示例文本分析
-- **高性能处理**: 采用并行计算技术，响应时间<1秒
-- **高准确率**: 基于LDA主题模型和机器学习分类器，准确率达90%+ 
-- **响应式设计**: 适配桌面、平板和移动设备
+- 🤖 **智能主题分类**: 使用LDA + RandomForest混合模型进行主题分析，准确率达到90%+
+- 📝 **多格式支持**: 支持Excel、CSV、TXT文件上传和批量处理，单次可处理10万+条文本
+- 🌐 **Web界面**: 简洁美观的Web界面，支持响应式设计，适配不同设备
+- 📊 **可视化分析**: 分析结果包含主题分布饼图、置信度柱状图等可视化图表
+- ⚡ **实时分析**: 支持单条文本实时主题预测，响应时间<1秒
+- 🔧 **模块化设计**: 采用分层架构，清晰的代码结构，易于维护和扩展
+- 📝 **完整日志**: 详细的日志记录系统，便于调试、监控和性能分析
 
-## 🏗️ 技术栈
+## 🏗️ 项目结构
 
-| 技术/框架 | 版本 | 用途 |
-|---------|------|------|
-| Python | 3.8+ | 后端开发语言 |
-| Flask | 2.0+ | Web应用框架 |
-| Scikit-learn | 1.3+ | 机器学习算法实现 |
-| LDA | - | 主题模型 |
-| jieba | 0.42+ | 中文分词 |
-| pandas | 1.5+ | 数据处理与分析 |
-| matplotlib | 3.7+ | 数据可视化 |
-| Bootstrap | 5.0+ | 前端UI框架 |
-| jQuery | 3.6+ | 前端交互处理 |
+```
+Mission3/
+├── src/                   # 源代码 (重构后的模块化架构)
+│   ├── app.py            # Flask应用工厂和初始化
+│   ├── config.py         # 统一配置管理
+│   ├── routes.py         # Blueprint路由定义
+│   ├── services.py       # 业务逻辑层
+│   ├── model_manager.py  # 模型管理器
+│   ├── text_preprocessor.py # 文本预处理器
+│   └── logger.py         # 日志系统
+├── static/               # 静态文件
+│   ├── templates/        # HTML模板
+│   │   ├── index.html   # 主页
+│   │   ├── result.html  # 结果页面
+│   │   ├── error.html   # 错误页面
+│   │   ├── 404.html     # 404页面
+│   │   └── 500.html     # 500页面
+│   ├── css/             # 样式文件
+│   ├── js/              # JavaScript文件
+│   └── images/          # 图片资源
+├── data/                 # 数据目录
+│   ├── models/          # 训练好的模型文件
+│   └── raw/             # 原始数据和上传文件
+│       ├── uploads/     # 用户上传文件
+│       ├── chinese_stopwords.txt
+│       └── 停用词表.txt
+├── model/                # 模型训练脚本
+│   ├── train_lda_model.py
+│   ├── train_theme_model.py
+│   └── data_preprocessor.py
+├── logs/                 # 日志文件
+├── tests/                # 测试文件
+├── requirements.txt      # 依赖包列表
+├── run.py               # 应用启动脚本
+└── README.md            # 项目说明文档
+```
 
 ## 🚀 快速开始
 
-### 环境要求
+### 1. 环境要求
 
-- Python 3.8 或更高版本
-- pip 包管理工具
+- Python 3.8+
+- pip包管理器
 
-### 安装步骤
-
-1. **克隆仓库**
-
-```bash
-git clone https://github.com/tongrui668-cmyk/text-theme-analysis.git
-cd text-theme-analysis
-```
-
-2. **创建虚拟环境**
-
-```bash
-# Windows
-python -m venv venv
-venv\Scripts\activate
-
-# Linux/macOS
-python3 -m venv venv
-source venv/bin/activate
-```
-
-3. **安装依赖**
+### 2. 安装依赖
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **启动应用**
+### 3. 启动应用
 
 ```bash
 python run.py
 ```
 
-5. **访问应用**
+应用将在 `http://127.0.0.1:5000` 启动。
 
-打开浏览器访问: `http://127.0.0.1:5000`
+### 4. 使用说明
 
-## 📁 项目结构
+1. **文件上传分析**:
+   - 访问主页
+   - 选择Excel、CSV或TXT文件上传
+   - 系统自动分析并显示结果
 
+2. **实时文本分析**:
+   - 在文本框中输入或粘贴文本
+   - 点击分析按钮获取主题预测结果
+
+## 🧠 技术架构
+
+### 核心技术栈
+
+- **Web框架**: Flask 2.3.3
+- **机器学习**: scikit-learn 1.3.0
+- **文本处理**: jieba + THULAC
+- **数据处理**: pandas + numpy
+- **模型持久化**: joblib
+
+### 模型架构
+
+1. **文本预处理**:
+   - 中文分词 (jieba/THULAC)
+   - 停用词过滤
+   - 文本清洗
+
+2. **特征提取**:
+   - LDA主题模型特征
+   - TF-IDF特征
+   - 特征融合
+
+3. **主题分类**:
+   - RandomForest分类器
+   - 多类别主题预测
+   - 置信度评估
+
+## 🌟 项目亮点
+
+1. **技术创新**: 结合LDA主题模型和RandomForest分类器，实现了高精度的中文文本主题分类
+2. **性能优化**: 批量处理算法优化，支持10万+条文本的快速分析
+3. **用户体验**: 简洁直观的Web界面，实时反馈分析结果
+4. **可扩展性**: 模块化架构设计，支持新增主题类型和文本处理算法
+5. **实际应用**: 可直接用于客户评论分析、新闻分类、文档管理等实际业务场景
+
+## �️ 技术栈
+
+| 类别 | 技术/框架 | 版本 | 用途 |
+|------|-----------|------|------|
+| Web框架 | Flask | 2.3.3 | 构建Web应用 |
+| 机器学习 | scikit-learn | 1.3.0 | 实现分类模型 |
+| 文本处理 | jieba | 0.42.1 | 中文分词 |
+| 数据处理 | pandas | 2.0.3 | 数据读取与处理 |
+| 数据处理 | numpy | 1.24.3 | 数值计算 |
+| 模型持久化 | joblib | 1.3.2 | 模型存储与加载 |
+| 前端 | HTML/CSS/JavaScript | - | 构建用户界面 |
+| 版本控制 | Git | - | 代码管理 |
+
+## �📊 API接口
+
+### 1. 获取应用状态
+
+```http
+GET /api/status
 ```
-├── src/                  # 主源码目录
-│   ├── app.py           # 应用入口
-│   ├── routes.py        # 路由定义
-│   ├── services.py      # 业务逻辑
-│   ├── model_manager.py # 模型管理
-│   ├── text_preprocessor.py # 文本预处理
-│   ├── logger.py        # 日志配置
-│   └── config.py        # 配置文件
-├── static/              # 静态资源
-│   ├── css/             # CSS样式
-│   ├── js/              # JavaScript代码
-│   ├── images/          # 项目图片
-│   └── templates/       # HTML模板
-├── data/                # 数据目录
-│   └── models/          # 预训练模型文件
-├── training/            # 模型训练目录
-│   ├── train_lda_model.py # LDA模型训练脚本
-│   ├── train_theme_model.py # 主题分类模型训练脚本
-│   ├── data_preprocessor.py # 数据预处理脚本
-│   ├── custom_dict.txt  # 自定义词典
-│   └── train_log.txt    # 训练日志
-├── logs/                # 日志目录
-├── requirements.txt     # 依赖列表
-├── run.py               # 项目启动文件
-├── .gitignore           # Git忽略文件
-└── LICENSE              # 许可证文件
+
+返回模型加载状态和应用运行状态。
+
+### 2. 获取主题列表
+
+```http
+GET /api/themes
 ```
 
-## 📊 预训练模型
+返回所有可用的主题及其关键词。
 
-项目提供了完整的预训练模型，用户下载后无需重新训练即可直接使用。所有模型文件位于 `data/models/` 目录下：
+### 3. 文本分析
 
-| 模型文件 | 用途 |
-|---------|------|
-| `lda_model.pkl` | LDA主题模型，用于文本主题提取 |
-| `theme_classification_model.pkl` | 主题分类器，用于文本主题分类 |
-| `vectorizer.pkl` | TF-IDF向量转换器，用于文本特征提取 |
-| `count_vectorizer.pkl` | 词频向量转换器，用于文本向量化 |
-| `theme_keywords.pkl` | 主题关键词映射表 |
+```http
+POST /analyze_text
+Content-Type: application/json
 
-## 🛠️ 模型训练
+{
+    "text": "要分析的文本内容"
+}
+```
 
-如果您需要重新训练模型或使用自己的数据集，可以使用 `training/` 目录下的训练脚本：
+返回主题预测结果和置信度。
 
-### 训练文件说明
+## 📱 界面预览
 
-`training/` 目录包含所有用于模型训练的脚本和资源文件：
+（此处可添加界面预览GIF或更多截图，展示系统功能和操作流程）
 
-| 文件名 | 用途 |
-|-------|------|
-| `train_lda_model.py` | LDA主题模型训练脚本 |
-| `train_theme_model.py` | 主题分类模型训练脚本 |
-| `data_preprocessor.py` | 数据预处理脚本 |
-| `lad_analyze.py` | LDA主题分析辅助脚本 |
-| `pretread.py` | 文本预处理辅助脚本 |
-| `custom_dict.txt` | 自定义词典，用于优化分词结果 |
-| `train_log.txt` | 训练过程日志记录 |
+## ⚙️ 配置说明
 
-### 训练步骤
+### 主要配置项 (src/config.py)
 
-1. **数据准备**
-   - 将训练数据放在 `training/` 目录下
-   - 数据格式：每行一条文本
-   - 支持TXT和CSV格式
+- **Flask配置**: 主机、端口、调试模式等
+- **模型参数**: LDA和RandomForest的超参数
+- **文件路径**: 数据和模型文件的存储路径
+- **日志配置**: 日志级别、文件大小等
+- **文本预处理配置**: 分词器选择、清洗规则等
+- **主题分类配置**: 默认主题列表和关键词数量
 
-2. **预处理数据**
-   ```bash
-   python training/data_preprocessor.py
-   ```
+### 环境变量
 
-3. **训练LDA主题模型**
-   ```bash
-   python training/train_lda_model.py
-   ```
+- `FLASK_ENV`: 运行环境 (development/production)
+- `SECRET_KEY`: Flask应用密钥
 
-4. **训练主题分类模型**
-   ```bash
-   python training/train_theme_model.py
-   ```
+## 🔧 开发指南
 
-5. **查看训练日志**
-   ```bash
-   # Windows
-   type training/train_log.txt
-   
-   # Linux/macOS
-   cat training/train_log.txt
-   ```
+### 添加新的主题
 
-训练完成后，新的模型文件将自动保存到 `data/models/` 目录下，覆盖原有的预训练模型。
+1. 在 `src/config.py` 中更新 `THEME_CONFIG`
+2. 重新训练模型或更新主题关键词
+3. 重启应用
 
-## ⚙️ 配置
+### 自定义文本预处理
 
-应用配置文件位于 `src/config.py`，可以修改以下参数：
+1. 修改 `src/text_preprocessor.py`
+2. 添加新的预处理方法
+3. 更新配置文件
 
-- **应用配置**: 端口、调试模式
-- **模型配置**: 模型文件路径、主题数量
-- **文本处理**: 分词器配置、停用词列表
-- **日志配置**: 日志级别、日志文件路径
+### 扩展API接口
 
-## 🔧 部署
+1. 在 `src/routes.py` 中添加新的Blueprint路由
+2. 在 `src/services.py` 中实现相应的业务逻辑
+3. 更新API文档
+
+## 📝 日志系统
+
+应用使用Python标准logging模块，支持：
+
+- 文件日志轮转
+- 不同级别的日志记录
+- 控制台和文件双重输出
+- 详细的错误追踪
+
+日志文件位置: `logs/app.log`
+
+## 🧪 测试
+
+```bash
+# 运行所有测试
+python -m pytest tests/
+
+# 运行特定测试
+python -m pytest tests/test_model_manager.py
+
+# 生成覆盖率报告
+python -m pytest --cov=src tests/
+```
+
+## 🚀 部署
 
 ### Docker部署
 
@@ -196,21 +249,17 @@ CMD ["python", "run.py"]
 
 ### 生产环境部署
 
-推荐使用:
-- **Gunicorn**: WSGI服务器
-- **Nginx**: 反向代理
-- **Supervisor**: 进程管理
+1. 使用Gunicorn作为WSGI服务器
+2. 配置Nginx作为反向代理
+3. 设置环境变量
+4. 配置日志轮转
 
-## 📝 日志系统
+## 📈 性能优化
 
-应用使用Python标准logging模块，支持:
-
-- 文件日志轮转
-- 不同级别的日志记录
-- 控制台和文件双重输出
-- 详细的错误追踪
-
-日志文件位置: `logs/app.log`
+- **模型缓存**: 使用内存缓存提高响应速度
+- **批量处理**: 支持大规模文本批量分析
+- **异步处理**: 可扩展为异步任务队列
+- **数据库集成**: 支持历史结果存储和查询
 
 ## 🤝 贡献指南
 
@@ -229,12 +278,27 @@ CMD ["python", "run.py"]
 如有问题或建议，请通过以下方式联系：
 
 - 📧 Email: your-email@example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/tongrui668-cmyk/text-theme-analysis/issues)
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/Mission3/issues)
 
 ## 🙏 致谢
 
 感谢以下开源项目的支持：
 
-- [jieba](https://github.com/fxsjy/jieba) - 中文分词库
-- [scikit-learn](https://scikit-learn.org/) - 机器学习库
-- [Flask](https://flask.palletsprojects.com/) - Web应用框架
+- [Flask](https://flask.palletsprojects.com/)
+- [scikit-learn](https://scikit-learn.org/)
+- [jieba](https://github.com/fxsjy/jieba)
+- [THULAC](https://github.com/thulac/thulac-python)
+
+---
+
+## 📊 项目状态
+
+- ✅ 基础功能完成
+- ✅ Web界面实现
+- ✅ API接口开发
+- ✅ 日志系统集成
+- 🔄 性能优化中
+- 📋 测试用例编写中
+- 📋 文档完善中
+
+**最后更新**: 2025年11月20日

@@ -69,49 +69,181 @@ class FileProcessingService:
     
     def process_excel_file(self, filepath):
         """处理Excel文件"""
-        try:
-            if self.model_manager is None:
-                flash('模型管理器未初始化，请重启应用')
-                return redirect(url_for('main.index'))
-            
-            # 读取Excel文件
-            df = pd.read_excel(filepath)
-            
-            # 查找评论列
-            text_column = self._find_text_column(df)
-            
-            if text_column is None:
-                flash('文件中未找到包含"评论"的列。本系统专门用于分析评论数据，请确保上传的文件包含评论列。')
-                return redirect(url_for('main.index'))
-            
-            # 获取文本数据
-            texts = self._extract_texts_from_dataframe(df, text_column)
-            
-            if not texts:
-                flash('评论列中没有找到有效的文本内容')
-                return redirect(url_for('main.index'))
-            
-            # 批量分析
-            results = self.model_manager.analyze_batch(texts)
-            
-            # 统计结果
-            result_data = self._analyze_results(results, filepath.name, len(texts))
-            
-            log_info(f"Excel文件处理完成: {filepath.name}, 成功分析 {result_data['successful_analyses']}/{len(texts)} 条文本")
-            
+        if self.model_manager is None:
+            # 跳转到结果界面显示错误
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': '模型管理器未初始化，请重启应用',
+                'error': True
+            }
             return render_template('result.html', result=result_data)
+        
+        log_info(f"开始读取Excel文件: {filepath}, 大小: {os.path.getsize(filepath)/1024/1024:.2f}MB")
+        
+        # 预处理检查
+        if not os.path.exists(filepath):
+            error_msg = 'Excel文件处理失败: 文件不存在\n\n可能的解决方法：\n'
+            error_msg += '1. 确保文件上传成功\n'
+            error_msg += '2. 检查文件路径是否正确\n'
+            error_msg += '3. 尝试重新上传文件'
             
-        except Exception as e:
-            log_error(e, f"Excel文件处理失败: {filepath}")
-            flash(f'Excel文件处理失败: {str(e)}')
-            return redirect(url_for('main.index'))
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': error_msg,
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
+        
+        # 检查文件大小
+        file_size = os.path.getsize(filepath)
+        if file_size == 0:
+            error_msg = 'Excel文件处理失败: 文件为空\n\n可能的解决方法：\n'
+            error_msg += '1. 确保上传的文件包含数据\n'
+            error_msg += '2. 检查文件是否正确保存\n'
+            error_msg += '3. 尝试重新创建或导出Excel文件'
+            
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': error_msg,
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
+        
+        # 读取Excel文件 - 尝试多种方法
+        log_info("读取Excel文件...")
+        df = None
+        
+        # 方法1: 尝试使用openpyxl引擎
+        try:
+            log_info("尝试使用openpyxl引擎读取...")
+            df = pd.read_excel(
+                filepath,
+                engine='openpyxl',
+                keep_default_na=False,
+                dtype=str,
+                header=0
+            )
+            log_info("使用openpyxl引擎读取成功")
+        except Exception as e1:
+            log_error(e1, "使用openpyxl引擎读取失败")
+            
+            # 方法2: 尝试使用xlrd引擎（如果可用）
+            try:
+                log_info("尝试使用xlrd引擎读取...")
+                df = pd.read_excel(
+                    filepath,
+                    engine='xlrd',
+                    keep_default_na=False,
+                    dtype=str,
+                    header=0
+                )
+                log_info("使用xlrd引擎读取成功")
+            except Exception as e2:
+                log_error(e2, "使用xlrd引擎读取失败")
+                
+                # 方法3: 尝试使用默认引擎
+                try:
+                    log_info("尝试使用默认引擎读取...")
+                    df = pd.read_excel(
+                        filepath,
+                        keep_default_na=False,
+                        dtype=str,
+                        header=0
+                    )
+                    log_info("使用默认引擎读取成功")
+                except Exception as e3:
+                    log_error(e3, "所有引擎读取失败")
+                    error_msg = f'Excel文件处理失败: {str(e3)}\n\n可能的解决方法：\n'
+                    error_msg += '1. 确保Excel文件格式完整，没有损坏\n'
+                    error_msg += '2. 检查文件扩展名是否与实际格式匹配（不要将CSV文件重命名为.xlsx）\n'
+                    error_msg += '3. 确认文件已正确保存并包含数据\n'
+                    error_msg += '4. 尝试重新导出或创建Excel文件\n'
+                    error_msg += '5. 检查文件大小是否超过限制（当前限制：10MB）'
+                    
+                    result_data = {
+                        'filename': filepath.name,
+                        'total_texts': 0,
+                        'successful_analyses': 0,
+                        'error_message': error_msg,
+                        'error': True
+                    }
+                    return render_template('result.html', result=result_data)
+        
+        log_info(f"Excel文件读取完成，行数: {len(df)}, 列数: {len(df.columns)}")
+        
+        # 检查是否为空数据框
+        if df.empty:
+            error_msg = 'Excel文件处理失败: 文件中没有数据\n\n可能的解决方法：\n'
+            error_msg += '1. 确保Excel文件包含数据\n'
+            error_msg += '2. 检查数据是否在第一个工作表中\n'
+            error_msg += '3. 尝试重新导出Excel文件，确保数据正确保存'
+            
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': error_msg,
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
+        
+        # 查找评论列
+        text_column = self._find_text_column(df)
+        
+        if text_column is None:
+            # 跳转到结果界面显示错误
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': '文件中未找到包含"评论"的列。本系统专门用于分析评论数据，请确保上传的文件包含评论列。',
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
+        
+        # 获取文本数据
+        texts = self._extract_texts_from_dataframe(df, text_column)
+        
+        if not texts:
+            # 跳转到结果界面显示错误
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': '评论列中没有找到有效的文本内容',
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
+        
+        # 批量分析
+        results = self.model_manager.analyze_batch(texts)
+        
+        # 统计结果
+        result_data = self._analyze_results(results, filepath.name, len(texts))
+        
+        log_info(f"Excel文件处理完成: {filepath.name}, 成功分析 {result_data['successful_analyses']}/{len(texts)} 条文本")
+        
+        return render_template('result.html', result=result_data)
     
     def process_text_file(self, filepath):
         """处理文本文件"""
         try:
             if self.model_manager is None:
-                flash('模型管理器未初始化，请重启应用')
-                return redirect(url_for('main.index'))
+                # 跳转到结果界面显示错误
+                result_data = {
+                    'filename': filepath.name,
+                    'total_texts': 0,
+                    'successful_analyses': 0,
+                    'error_message': '模型管理器未初始化，请重启应用',
+                    'error': True
+                }
+                return render_template('result.html', result=result_data)
             
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -130,20 +262,41 @@ class FileProcessingService:
                 log_info(f"文本文件处理完成: {filepath.name}")
                 return render_template('result.html', result=result_data)
             else:
-                flash(f'文本分析失败: {result.get("error", "未知错误")}')
-                return redirect(url_for('main.index'))
+                # 跳转到结果界面显示错误
+                result_data = {
+                    'filename': filepath.name,
+                    'total_texts': 1,
+                    'successful_analyses': 0,
+                    'error_message': f'文本分析失败: {result.get("error", "未知错误")}',
+                    'error': True
+                }
+                return render_template('result.html', result=result_data)
                 
         except Exception as e:
             log_error(e, f"文本文件处理失败: {filepath}")
-            flash(f'文本文件处理失败: {str(e)}')
-            return redirect(url_for('main.index'))
+            # 跳转到结果界面显示错误
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': f'文本文件处理失败: {str(e)}',
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
     
     def process_csv_file(self, filepath):
         """处理CSV文件"""
         try:
             if self.model_manager is None:
-                flash('模型管理器未初始化，请重启应用')
-                return redirect(url_for('main.index'))
+                # 跳转到结果界面显示错误
+                result_data = {
+                    'filename': filepath.name,
+                    'total_texts': 0,
+                    'successful_analyses': 0,
+                    'error_message': '模型管理器未初始化，请重启应用',
+                    'error': True
+                }
+                return render_template('result.html', result=result_data)
             
             # 读取CSV文件
             df = pd.read_csv(filepath, encoding='utf-8')
@@ -152,15 +305,29 @@ class FileProcessingService:
             text_column = self._find_text_column(df)
             
             if text_column is None:
-                flash('文件中未找到包含"评论"的列。本系统专门用于分析评论数据，请确保上传的文件包含评论列。')
-                return redirect(url_for('main.index'))
+                # 跳转到结果界面显示错误
+                result_data = {
+                    'filename': filepath.name,
+                    'total_texts': 0,
+                    'successful_analyses': 0,
+                    'error_message': '文件中未找到包含"评论"的列。本系统专门用于分析评论数据，请确保上传的文件包含评论列。',
+                    'error': True
+                }
+                return render_template('result.html', result=result_data)
             
             # 获取文本数据
             texts = self._extract_texts_from_dataframe(df, text_column)
             
             if not texts:
-                flash('评论列中没有找到有效的文本内容')
-                return redirect(url_for('main.index'))
+                # 跳转到结果界面显示错误
+                result_data = {
+                    'filename': filepath.name,
+                    'total_texts': 0,
+                    'successful_analyses': 0,
+                    'error_message': '评论列中没有找到有效的文本内容',
+                    'error': True
+                }
+                return render_template('result.html', result=result_data)
             
             # 批量分析
             results = self.model_manager.analyze_batch(texts)
@@ -174,8 +341,15 @@ class FileProcessingService:
             
         except Exception as e:
             log_error(e, f"CSV文件处理失败: {filepath}")
-            flash(f'CSV文件处理失败: {str(e)}')
-            return redirect(url_for('main.index'))
+            # 跳转到结果界面显示错误
+            result_data = {
+                'filename': filepath.name,
+                'total_texts': 0,
+                'successful_analyses': 0,
+                'error_message': f'CSV文件处理失败: {str(e)}',
+                'error': True
+            }
+            return render_template('result.html', result=result_data)
     
     def _find_text_column(self, df):
         """查找文本列 - 专门用于评论内容数据"""
