@@ -417,6 +417,7 @@ class FileProcessingService:
         successful_analyses = 0
         theme_examples = {}  # 存储每个主题的示例评论
         theme_keywords = {}  # 存储每个主题的关键词
+        keyword_freq = {}  # 统计关键词频率
         
         for result in results:
             if result.get('success', False):
@@ -424,24 +425,43 @@ class FileProcessingService:
                 theme = result.get('theme', '未知')
                 themes_count[theme] = themes_count.get(theme, 0) + 1
                 
-                # 收集每个主题的示例评论（最多5个）
+                # 收集每个主题的所有评论（后续按置信度排序）
                 if theme not in theme_examples:
                     theme_examples[theme] = []
-                if len(theme_examples[theme]) < 5:
-                    theme_examples[theme].append({
-                        'text': result.get('original_text', ''),
-                        'confidence': result.get('confidence', 0.0),
-                        'keywords': result.get('keywords', [])
-                    })
+                
+                # 添加评论到列表（包含置信度信息）
+                theme_examples[theme].append({
+                    'text': result.get('original_text', ''),
+                    'confidence': result.get('confidence', 0.0),
+                    'keywords': result.get('keywords', [])
+                })
                 
                 # 收集主题关键词
                 if theme not in theme_keywords and result.get('keywords'):
                     theme_keywords[theme] = result.get('keywords', [])[:5]
+                
+                # 统计关键词频率
+                if result.get('keywords'):
+                    for keyword in result.get('keywords', []):
+                        keyword_freq[keyword] = keyword_freq.get(keyword, 0) + 1
+        
+        # 对每个主题的评论按置信度排序，选择前5条
+        for theme in theme_examples:
+            # 按置信度降序排序
+            theme_examples[theme] = sorted(
+                theme_examples[theme], 
+                key=lambda x: x['confidence'], 
+                reverse=True
+            )[:5]  # 只保留前5条
         
         # 获取主题友好名称
         theme_names = {}
         if self.model_manager:
             theme_names = self.model_manager.get_all_theme_names()
+        
+        # 排序关键词频率
+        sorted_keywords = sorted(keyword_freq.items(), key=lambda x: x[1], reverse=True)
+        top_keywords = [keyword for keyword, freq in sorted_keywords[:10]]
         
         return {
             'filename': filename,
@@ -451,8 +471,11 @@ class FileProcessingService:
             'theme_names': theme_names,
             'theme_examples': theme_examples,
             'theme_keywords': theme_keywords,
+            'top_keywords': top_keywords,  # 新增：热门关键词列表
+            'keyword_freq': keyword_freq,  # 新增：关键词频率
             'results': results[:10],  # 只显示前10个结果
-            'show_all': len(results) > 10
+            'show_all': len(results) > 10,
+            'has_time_data': False  # 默认设置为False，因为当前系统没有时间数据处理
         }
 
 

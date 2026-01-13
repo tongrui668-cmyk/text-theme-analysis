@@ -29,7 +29,7 @@ class Config:
     DATA_PATHS = {
         'raw_data': PROJECT_ROOT / 'data' / 'raw',
         'models': PROJECT_ROOT / 'data' / 'models',
-        'stopwords': PROJECT_ROOT / 'data' / 'raw' / 'chinese_stopwords.txt',
+        'stopwords': PROJECT_ROOT / 'data' / 'processed' / 'stopwords.txt',
         'custom_dict': PROJECT_ROOT / 'data' / 'raw' / 'custom_dict.txt',
         'training_data': PROJECT_ROOT / 'data' / 'raw' / '评论和正文.xlsx',
     }

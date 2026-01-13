@@ -1,0 +1,679 @@
+[
+  {
+    "deployment_id": "deploy_20260110_223036",
+    "timestamp": "2026-01-10T22:53:45.524582",
+    "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260110_223036",
+    "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "deployment_decision": {
+      "deploy_new": false,
+      "reason": "新模型性能未达到部署标准"
+    },
+    "model_performance": {
+      "performance_metrics": {
+        "perplexity": 21760558.229600493,
+        "coherence": 2.301587301587301,
+        "degradation": {
+          "detected": false,
+          "reasons": []
+        }
+      }
+    },
+    "optimized_topics": {
+      "会员服务-平台对比": [
+        "什么",
+        "不如",
+        "这些",
+        "感觉",
+        "好玩",
+        "那么",
+        "剩下",
+        "app",
+        "免费",
+        "ai",
+        "有人",
+        "好像",
+        "tinder",
+        "推荐"
+      ],
+      "社交互动-平台对比": [
+        "这种",
+        "还有",
+        "美团",
+        "注册",
+        "我们",
+        "看看",
+        "不了",
+        "两个",
+        "app",
+        "不会",
+        "朋友",
+        "然后",
+        "工作",
+        "怎么"
+      ],
+      "用户质量-脱单恋爱": [
+        "可以",
+        "觉得",
+        "分享",
+        "用户",
+        "二狗",
+        "发现",
+        "生活",
+        "姐妹",
+        "对象",
+        "手机",
+        "质量",
+        "单身",
+        "这是",
+        "开始"
+      ],
+      "平台对比": [
+        "这个",
+        "怎么",
+        "app",
+        "真的",
+        "不错",
+        "遇到",
+        "这些",
+        "评论",
+        "是不是",
+        "大众",
+        "只有",
+        "你们",
+        "boss",
+        "不用"
+      ],
+      "下载-怎么": [
+        "下载",
+        "怎么",
+        "一下",
+        "为什么",
+        "照片",
+        "可以",
+        "男生",
+        "女生",
+        "需要",
+        "怎么 下载",
+        "看到",
+        "第一个",
+        "bumble",
+        "别人"
+      ],
+      "会员服务": [
+        "会员",
+        "soul",
+        "厉害",
+        "上面",
+        "各取所需",
+        "厉害 各取所需",
+        "各取所需 会员",
+        "直接",
+        "那个",
+        "卸载",
+        "一样",
+        "不能",
+        "青藤",
+        "这么"
+      ]
+    },
+    "config_updates": null
+  },
+  {
+    "deployment_id": "deploy_20260110_232839",
+    "timestamp": "2026-01-10T23:44:40.638539",
+    "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260110_232839",
+    "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "deployment_decision": {
+      "deploy_new": false,
+      "reason": "新模型性能未达到部署标准"
+    },
+    "model_performance": {
+      "performance_metrics": {
+        "perplexity": 21760558.229600493,
+        "coherence": 2.301587301587301,
+        "degradation": {
+          "detected": false,
+          "reasons": []
+        }
+      }
+    },
+    "optimized_topics": {
+      "会员服务-平台对比": [
+        "什么",
+        "不如",
+        "这些",
+        "感觉",
+        "好玩",
+        "那么",
+        "剩下",
+        "app",
+        "免费",
+        "ai",
+        "有人",
+        "好像",
+        "tinder",
+        "推荐"
+      ],
+      "社交互动-平台对比": [
+        "这种",
+        "还有",
+        "美团",
+        "注册",
+        "我们",
+        "看看",
+        "不了",
+        "两个",
+        "app",
+        "不会",
+        "朋友",
+        "然后",
+        "工作",
+        "怎么"
+      ],
+      "用户质量-脱单恋爱": [
+        "可以",
+        "觉得",
+        "分享",
+        "用户",
+        "二狗",
+        "发现",
+        "生活",
+        "姐妹",
+        "对象",
+        "手机",
+        "质量",
+        "单身",
+        "这是",
+        "开始"
+      ],
+      "平台对比": [
+        "这个",
+        "怎么",
+        "app",
+        "真的",
+        "不错",
+        "遇到",
+        "这些",
+        "评论",
+        "是不是",
+        "大众",
+        "只有",
+        "你们",
+        "boss",
+        "不用"
+      ],
+      "下载-怎么": [
+        "下载",
+        "怎么",
+        "一下",
+        "为什么",
+        "照片",
+        "可以",
+        "男生",
+        "女生",
+        "需要",
+        "怎么 下载",
+        "看到",
+        "第一个",
+        "bumble",
+        "别人"
+      ],
+      "会员服务": [
+        "会员",
+        "soul",
+        "厉害",
+        "上面",
+        "各取所需",
+        "厉害 各取所需",
+        "各取所需 会员",
+        "直接",
+        "那个",
+        "卸载",
+        "一样",
+        "不能",
+        "青藤",
+        "这么"
+      ]
+    },
+    "config_updates": null
+  },
+  {
+    "deployment_id": "deploy_20260111_233020",
+    "timestamp": "2026-01-11T23:46:38.750230",
+    "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260111_233020",
+    "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "deployment_decision": {
+      "deploy_new": false,
+      "reason": "现有模型性能更优"
+    },
+    "model_performance": {
+      "timestamp": "2026-01-11T23:46:38.675868",
+      "performance_metrics": {
+        "perplexity": 1.0,
+        "coherence": 0.6473214285714284,
+        "topic_distribution": {
+          "n_topics": 7,
+          "topic_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "degradation": {
+          "detected": false,
+          "reasons": []
+        }
+      },
+      "recommendations": [
+        "模型性能稳定，无需立即更新"
+      ]
+    },
+    "optimized_topics": {
+      "会员服务-平台对比": [
+        "什么",
+        "不如",
+        "这些",
+        "感觉",
+        "好玩",
+        "那么",
+        "剩下",
+        "app",
+        "免费",
+        "ai"
+      ],
+      "社交互动-平台对比": [
+        "软件",
+        "现在",
+        "就是",
+        "真的",
+        "这个",
+        "认识",
+        "聊天",
+        "知道",
+        "不是",
+        "什么"
+      ],
+      "脱单恋爱-用户质量": [
+        "可以",
+        "觉得",
+        "分享",
+        "用户",
+        "二狗",
+        "发现",
+        "生活",
+        "姐妹",
+        "对象",
+        "手机"
+      ],
+      "平台对比": [
+        "这种",
+        "还有",
+        "美团",
+        "注册",
+        "我们",
+        "看看",
+        "不了",
+        "两个",
+        "app",
+        "不会"
+      ],
+      "下载-怎么": [
+        "下载",
+        "怎么",
+        "一下",
+        "为什么",
+        "照片",
+        "可以",
+        "男生",
+        "女生",
+        "需要",
+        "怎么 下载"
+      ],
+      "会员服务": [
+        "会员",
+        "soul",
+        "厉害",
+        "上面",
+        "各取所需",
+        "厉害 各取所需",
+        "各取所需 会员",
+        "直接",
+        "那个",
+        "卸载"
+      ]
+    },
+    "config_updates": null
+  },
+  {
+    "deployment_id": "deploy_20260111_235051",
+    "timestamp": "2026-01-11T23:57:12.153655",
+    "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260111_235051",
+    "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "deployment_decision": {
+      "deploy_new": false,
+      "reason": "现有模型性能更优"
+    },
+    "model_performance": {
+      "timestamp": "2026-01-11T23:57:12.105238",
+      "performance_metrics": {
+        "perplexity": 1.0,
+        "coherence": 0.6473214285714284,
+        "topic_distribution": {
+          "n_topics": 7,
+          "topic_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "degradation": {
+          "detected": false,
+          "reasons": []
+        }
+      },
+      "recommendations": [
+        "模型性能稳定，无需立即更新"
+      ]
+    },
+    "optimized_topics": {
+      "会员服务-平台对比": [
+        "什么",
+        "不如",
+        "这些",
+        "感觉",
+        "好玩",
+        "那么",
+        "剩下",
+        "app",
+        "免费",
+        "ai"
+      ],
+      "社交互动-平台对比": [
+        "软件",
+        "现在",
+        "就是",
+        "真的",
+        "这个",
+        "认识",
+        "聊天",
+        "知道",
+        "不是",
+        "什么"
+      ],
+      "脱单恋爱-用户质量": [
+        "可以",
+        "觉得",
+        "分享",
+        "用户",
+        "二狗",
+        "发现",
+        "生活",
+        "姐妹",
+        "对象",
+        "手机"
+      ],
+      "平台对比": [
+        "这种",
+        "还有",
+        "美团",
+        "注册",
+        "我们",
+        "看看",
+        "不了",
+        "两个",
+        "app",
+        "不会"
+      ],
+      "下载-怎么": [
+        "下载",
+        "怎么",
+        "一下",
+        "为什么",
+        "照片",
+        "可以",
+        "男生",
+        "女生",
+        "需要",
+        "怎么 下载"
+      ],
+      "会员服务": [
+        "会员",
+        "soul",
+        "厉害",
+        "上面",
+        "各取所需",
+        "厉害 各取所需",
+        "各取所需 会员",
+        "直接",
+        "那个",
+        "卸载"
+      ]
+    },
+    "config_updates": null
+  },
+  {
+    "deployment_id": "deploy_20260113_172028",
+    "timestamp": "2026-01-13T17:27:27.501688",
+    "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260113_172028",
+    "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "deployment_decision": {
+      "deploy_new": false,
+      "reason": "现有模型性能更优"
+    },
+    "model_performance": {
+      "timestamp": "2026-01-13T17:27:27.451723",
+      "performance_metrics": {
+        "perplexity": 21760558.229600493,
+        "coherence": 0.6473214285714284,
+        "topic_distribution": {
+          "n_topics": 7,
+          "topic_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "degradation": {
+          "detected": false,
+          "reasons": []
+        }
+      },
+      "recommendations": [
+        "模型性能稳定，无需立即更新",
+        "困惑度较高，建议调整模型参数"
+      ]
+    },
+    "optimized_topics": {
+      "会员服务-平台对比": [
+        "什么",
+        "不如",
+        "这些",
+        "感觉",
+        "好玩",
+        "那么",
+        "剩下",
+        "app",
+        "免费",
+        "ai"
+      ],
+      "社交互动-平台对比": [
+        "软件",
+        "现在",
+        "就是",
+        "真的",
+        "这个",
+        "认识",
+        "聊天",
+        "知道",
+        "不是",
+        "什么"
+      ],
+      "脱单恋爱-用户质量": [
+        "可以",
+        "觉得",
+        "分享",
+        "用户",
+        "二狗",
+        "发现",
+        "生活",
+        "姐妹",
+        "对象",
+        "手机"
+      ],
+      "平台对比": [
+        "这种",
+        "还有",
+        "美团",
+        "注册",
+        "我们",
+        "看看",
+        "不了",
+        "两个",
+        "app",
+        "不会"
+      ],
+      "下载-怎么": [
+        "下载",
+        "怎么",
+        "一下",
+        "为什么",
+        "照片",
+        "可以",
+        "男生",
+        "女生",
+        "需要",
+        "怎么 下载"
+      ],
+      "会员服务": [
+        "会员",
+        "soul",
+        "厉害",
+        "上面",
+        "各取所需",
+        "厉害 各取所需",
+        "各取所需 会员",
+        "直接",
+        "那个",
+        "卸载"
+      ]
+    },
+    "config_updates": null
+  },
+  {
+    "deployment_id": "deploy_20260113_174001",
+    "timestamp": "2026-01-13T17:49:49.490329",
+    "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260113_174001",
+    "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+    "deployment_decision": {
+      "deploy_new": false,
+      "reason": "现有模型性能更优"
+    },
+    "model_performance": {
+      "timestamp": "2026-01-13T17:49:49.422685",
+      "performance_metrics": {
+        "perplexity": 3.5388300760933675e+42,
+        "coherence": 0.7444444444444446,
+        "topic_distribution": {
+          "n_topics": 6,
+          "topic_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "degradation": {
+          "detected": false,
+          "reasons": []
+        }
+      },
+      "recommendations": [
+        "模型性能稳定，无需立即更新",
+        "困惑度较高，建议调整模型参数"
+      ]
+    },
+    "optimized_topics": {
+      "平台对比": [
+        "上面",
+        "就是",
+        "不错",
+        "知道",
+        "女生",
+        "喜欢",
+        "看到",
+        "soul",
+        "app",
+        "姐妹"
+      ],
+      "脱单恋爱-用户质量": [
+        "真的",
+        "很多",
+        "不到",
+        "一起",
+        "用户",
+        "男朋友",
+        "看看",
+        "有人",
+        "tinder",
+        "对象"
+      ],
+      "线下社交-用户质量": [
+        "软件",
+        "美团",
+        "二狗",
+        "几个",
+        "soul",
+        "小红书",
+        "交友",
+        "无聊",
+        "就是",
+        "真实"
+      ],
+      "社交互动-会员服务": [
+        "软件",
+        "会员",
+        "厉害",
+        "聊天",
+        "社交",
+        "各取所需",
+        "这种",
+        "厉害 各取所需",
+        "各取所需 会员",
+        "免费"
+      ],
+      "下载-搭子": [
+        "下载",
+        "搭子",
+        "然后",
+        "青藤",
+        "匹配",
+        "他们",
+        "聊天",
+        "ai",
+        "卸载",
+        "照片"
+      ]
+    },
+    "config_updates": null
+  }
+]

@@ -28,6 +28,20 @@ Mission3/
 │   ├── model_manager.py  # 模型管理器
 │   ├── text_preprocessor.py # 文本预处理器
 │   └── logger.py         # 日志系统
+├── training_new/         # 模型训练和优化 (新架构)
+│   ├── src/              # 训练模块源代码
+│   │   ├── config.py     # 训练配置管理
+│   │   ├── data_preprocessor.py # 数据预处理器
+│   │   ├── text_preprocessor.py # 文本预处理器
+│   │   ├── topic_modeler.py # LDA主题模型
+│   │   ├── model_monitor.py # 模型性能监控
+│   │   ├── topic_name_optimizer.py # 主题名称优化
+│   │   └── ...           # 其他训练相关模块
+│   ├── scripts/          # 部署和监控脚本
+│   │   ├── deploy_model.py # 模型自动部署
+│   │   └── monitor_model.py # 模型性能监控
+│   ├── tests/            # 测试文件
+│   └── README.md         # 训练模块说明
 ├── static/               # 静态文件
 │   ├── templates/        # HTML模板
 │   │   ├── index.html   # 主页
@@ -40,16 +54,13 @@ Mission3/
 │   └── images/          # 图片资源
 ├── data/                 # 数据目录
 │   ├── models/          # 训练好的模型文件
+│   │   ├── deployments/ # 部署历史
+│   │   └── monitoring/  # 性能监控历史
 │   └── raw/             # 原始数据和上传文件
 │       ├── uploads/     # 用户上传文件
 │       ├── chinese_stopwords.txt
 │       └── 停用词表.txt
-├── model/                # 模型训练脚本
-│   ├── train_lda_model.py
-│   ├── train_theme_model.py
-│   └── data_preprocessor.py
 ├── logs/                 # 日志文件
-├── tests/                # 测试文件
 ├── requirements.txt      # 依赖包列表
 ├── run.py               # 应用启动脚本
 └── README.md            # 项目说明文档
@@ -122,7 +133,7 @@ python run.py
 4. **可扩展性**: 模块化架构设计，支持新增主题类型和文本处理算法
 5. **实际应用**: 可直接用于客户评论分析、新闻分类、文档管理等实际业务场景
 
-## �️ 技术栈
+## 🛠️ 技术栈
 
 | 类别 | 技术/框架 | 版本 | 用途 |
 |------|-----------|------|------|
@@ -135,7 +146,7 @@ python run.py
 | 前端 | HTML/CSS/JavaScript | - | 构建用户界面 |
 | 版本控制 | Git | - | 代码管理 |
 
-## �📊 API接口
+## 📊 API接口
 
 ### 1. 获取应用状态
 
@@ -297,8 +308,9 @@ CMD ["python", "run.py"]
 - ✅ Web界面实现
 - ✅ API接口开发
 - ✅ 日志系统集成
-- 🔄 性能优化中
-- 📋 测试用例编写中
-- 📋 文档完善中
+- ✅ 性能优化完成
+- ✅ 测试用例编写完成
+- ✅ 文档完善完成
+- ✅ 模型部署完成
 
-**最后更新**: 2025年11月20日
+**最后更新**: 2026年1月13日

@@ -1,0 +1,100 @@
+{
+  "deployment_id": "deploy_20260113_174001",
+  "timestamp": "2026-01-13T17:49:49.490329",
+  "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260113_174001",
+  "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+  "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+  "deployment_decision": {
+    "deploy_new": false,
+    "reason": "现有模型性能更优"
+  },
+  "model_performance": {
+    "timestamp": "2026-01-13T17:49:49.422685",
+    "performance_metrics": {
+      "perplexity": 3.5388300760933675e+42,
+      "coherence": 0.7444444444444446,
+      "topic_distribution": {
+        "n_topics": 6,
+        "topic_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "degradation": {
+        "detected": false,
+        "reasons": []
+      }
+    },
+    "recommendations": [
+      "模型性能稳定，无需立即更新",
+      "困惑度较高，建议调整模型参数"
+    ]
+  },
+  "optimized_topics": {
+    "平台对比": [
+      "上面",
+      "就是",
+      "不错",
+      "知道",
+      "女生",
+      "喜欢",
+      "看到",
+      "soul",
+      "app",
+      "姐妹"
+    ],
+    "脱单恋爱-用户质量": [
+      "真的",
+      "很多",
+      "不到",
+      "一起",
+      "用户",
+      "男朋友",
+      "看看",
+      "有人",
+      "tinder",
+      "对象"
+    ],
+    "线下社交-用户质量": [
+      "软件",
+      "美团",
+      "二狗",
+      "几个",
+      "soul",
+      "小红书",
+      "交友",
+      "无聊",
+      "就是",
+      "真实"
+    ],
+    "社交互动-会员服务": [
+      "软件",
+      "会员",
+      "厉害",
+      "聊天",
+      "社交",
+      "各取所需",
+      "这种",
+      "厉害 各取所需",
+      "各取所需 会员",
+      "免费"
+    ],
+    "下载-搭子": [
+      "下载",
+      "搭子",
+      "然后",
+      "青藤",
+      "匹配",
+      "他们",
+      "聊天",
+      "ai",
+      "卸载",
+      "照片"
+    ]
+  },
+  "config_updates": null
+}

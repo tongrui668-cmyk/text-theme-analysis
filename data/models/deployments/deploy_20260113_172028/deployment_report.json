@@ -1,0 +1,113 @@
+{
+  "deployment_id": "deploy_20260113_172028",
+  "timestamp": "2026-01-13T17:27:27.501688",
+  "deployment_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\deployments\\deploy_20260113_172028",
+  "new_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+  "current_model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+  "deployment_decision": {
+    "deploy_new": false,
+    "reason": "现有模型性能更优"
+  },
+  "model_performance": {
+    "timestamp": "2026-01-13T17:27:27.451723",
+    "performance_metrics": {
+      "perplexity": 21760558.229600493,
+      "coherence": 0.6473214285714284,
+      "topic_distribution": {
+        "n_topics": 7,
+        "topic_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "degradation": {
+        "detected": false,
+        "reasons": []
+      }
+    },
+    "recommendations": [
+      "模型性能稳定，无需立即更新",
+      "困惑度较高，建议调整模型参数"
+    ]
+  },
+  "optimized_topics": {
+    "会员服务-平台对比": [
+      "什么",
+      "不如",
+      "这些",
+      "感觉",
+      "好玩",
+      "那么",
+      "剩下",
+      "app",
+      "免费",
+      "ai"
+    ],
+    "社交互动-平台对比": [
+      "软件",
+      "现在",
+      "就是",
+      "真的",
+      "这个",
+      "认识",
+      "聊天",
+      "知道",
+      "不是",
+      "什么"
+    ],
+    "脱单恋爱-用户质量": [
+      "可以",
+      "觉得",
+      "分享",
+      "用户",
+      "二狗",
+      "发现",
+      "生活",
+      "姐妹",
+      "对象",
+      "手机"
+    ],
+    "平台对比": [
+      "这种",
+      "还有",
+      "美团",
+      "注册",
+      "我们",
+      "看看",
+      "不了",
+      "两个",
+      "app",
+      "不会"
+    ],
+    "下载-怎么": [
+      "下载",
+      "怎么",
+      "一下",
+      "为什么",
+      "照片",
+      "可以",
+      "男生",
+      "女生",
+      "需要",
+      "怎么 下载"
+    ],
+    "会员服务": [
+      "会员",
+      "soul",
+      "厉害",
+      "上面",
+      "各取所需",
+      "厉害 各取所需",
+      "各取所需 会员",
+      "直接",
+      "那个",
+      "卸载"
+    ]
+  },
+  "config_updates": null
+}

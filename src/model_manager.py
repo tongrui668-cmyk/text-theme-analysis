@@ -253,13 +253,17 @@ class ModelManager:
             
             # 获取主题关键词
             theme_keywords = self.theme_keywords.get(predicted_theme, []) if self.theme_keywords else []
+            # 过滤停用词
+            stopwords = self.preprocessor.stopwords
+            filtered_keywords = [kw for kw in theme_keywords if kw not in stopwords and len(kw) > 1]
+            final_keywords = filtered_keywords if filtered_keywords else theme_keywords[:5]
             
             return {
                 'success': True,
                 'theme': predicted_theme,
                 'confidence': confidence,
                 'processed_text': processed_text,
-                'keywords': theme_keywords,
+                'keywords': final_keywords,
                 'probabilities': {
                     theme_names[i] if i < len(theme_names) else f"主题{i}": float(prob) 
                     for i, prob in enumerate(probabilities)
@@ -279,20 +283,32 @@ class ModelManager:
     def get_theme_keywords(self, theme: str = None) -> Dict[str, List[str]]:
         """
         获取主题关键词
+        过滤掉停用词，确保返回的关键词都是有意义的
         
         Args:
             theme: 指定主题，如果为None则返回所有主题关键词
             
         Returns:
-            主题关键词字典
+            过滤停用词后的主题关键词字典
         """
         if self.theme_keywords is None:
             return {}
         
+        # 获取停用词集合
+        stopwords = self.preprocessor.stopwords
+        
         if theme is None:
-            return self.theme_keywords
+            # 过滤所有主题的关键词
+            filtered_keywords = {}
+            for theme_name, keywords in self.theme_keywords.items():
+                filtered = [kw for kw in keywords if kw not in stopwords and len(kw) > 1]
+                filtered_keywords[theme_name] = filtered if filtered else keywords[:5]
+            return filtered_keywords
         else:
-            return {theme: self.theme_keywords.get(theme, [])}
+            # 过滤指定主题的关键词
+            keywords = self.theme_keywords.get(theme, [])
+            filtered = [kw for kw in keywords if kw not in stopwords and len(kw) > 1]
+            return {theme: filtered if filtered else keywords[:5]}
     
     @log_function_call
     def get_theme_name(self, theme: str) -> str:
@@ -312,56 +328,30 @@ class ModelManager:
         keyword_str = ' '.join(keywords)
         
         # 基于实际关键词特征的精确命名逻辑
-        if theme == "主题 1":
-            # 主题1关键词: ['软件', '会员', '可以', '厉害', '一个', '交友', '这些', '这个', '各取所需', '没有']
-            if '会员' in keyword_str and '交友' in keyword_str:
-                return "会员制社交软件"
-            elif '软件' in keyword_str and '厉害' in keyword_str:
-                return "软件功能评价"
-            else:
-                return "社交软件应用"
+        if theme == "用户质量-很多-知道相关分析":
+            return "用户质量分析"
         
-        elif theme == "主题 2":
-            # 主题2关键词: ['下载', '第一', '对象', '美团', 'boss', '脱单', '为什', '可以', '会员', '很多']
-            if 'boss' in keyword_str or '美团' in keyword_str:
-                return "求职招聘平台"
-            elif '脱单' in keyword_str or '对象' in keyword_str:
-                return "婚恋脱单服务"
-            else:
-                return "婚恋求职服务"
+        elif theme == "线下社交与满意度":
+            return "线下社交体验"
         
-        elif theme == "主题 3":
-            # 主题3关键词: ['这个', '聊天', '照片', '搭子', '知道', '还是', '结果', '他们', '对象', '可以']
-            if '搭子' in keyword_str or '聊天' in keyword_str:
-                return "社交搭子交友"
-            elif '照片' in keyword_str:
-                return "照片社交互动"
-            else:
-                return "婚恋交友服务"
+        elif theme == "会员服务(免费)":
+            return "会员服务讨论"
         
-        elif theme == "主题 4":
-            # 主题4关键词: ['一个', '可以', 'soul', '感觉', 'app', '现在', '这个', '没有', '时候', '上面']
-            if 'soul' in keyword_str:
-                return "Soul APP体验"
-            elif '感觉' in keyword_str or 'app' in keyword_str:
-                return "APP使用感受"
-            else:
-                return "APP体验分享"
+        elif theme == "真的-上面-已经相关分析":
+            return "用户评价分析"
         
-        elif theme == "主题 5":
-            # 主题5关键词: ['软件', '现在', '好玩', '喜欢', '一个', '认识', '自己', '免费', '这个', '没有']
-            if '好玩' in keyword_str or '喜欢' in keyword_str:
-                return "娱乐社交软件"
-            elif '免费' in keyword_str and '认识' in keyword_str:
-                return "免费交友平台"
-            elif '软件' in keyword_str:
-                return "社交软件推荐"
-            else:
-                return "软件娱乐体验"
+        elif theme == "脱单效果(对象)":
+            return "婚恋脱单服务"
+        
+        elif theme == "线下社交":
+            return "社交互动交流"
+        
+        elif theme == "匹配质量":
+            return "匹配推荐服务"
         
         # 通用命名逻辑（用于其他主题）
         elif any(word in keyword_str for word in ['boss', '招聘', '求职', '工作', '面试']):
-            return "婚恋求职服务"
+            return "求职招聘服务"
         elif any(word in keyword_str for word in ['脱单', '对象', '相亲', '恋爱', '结婚']):
             return "婚恋交友服务"
         elif any(word in keyword_str for word in ['下载', '安装', '软件', 'app', '应用']):

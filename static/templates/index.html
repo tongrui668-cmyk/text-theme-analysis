@@ -4,165 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>主题分类工具</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #343a40;
-            margin-bottom: 30px;
-        }
-        .upload-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-        input[type="file"] {
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px dashed #ddd;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 400px;
-            transition: border-color 0.3s;
-        }
-        input[type="file"]:hover {
-            border-color: #007bff;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        button:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
-        .error-message {
-            color: #dc3545;
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-        }
-        .success-message {
-            color: #155724;
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            border-radius: 5px;
-        }
-        .file-info {
-            background-color: #e9ecef;
-            padding: 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        .file-info h3 {
-            margin-top: 0;
-            color: #495057;
-        }
-        .file-info ul {
-            text-align: left;
-            margin: 10px 0;
-        }
-        .file-info li {
-            margin: 5px 0;
-        }
-        /* 加载状态样式 */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .loading-content {
-            text-align: center;
-            max-width: 500px;
-            padding: 30px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .progress-container {
-            width: 100%;
-            background-color: #f3f3f3;
-            border-radius: 25px;
-            margin: 20px 0;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-        }
-        .progress-bar {
-            height: 20px;
-            background-color: #3498db;
-            border-radius: 25px;
-            width: 0%;
-            transition: width 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        .progress-text {
-            color: #34495e;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-        .loading-message {
-            color: #2c3e50;
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -179,6 +22,25 @@
             {% endif %}
         {% endwith %}
 
+        <!-- 特性介绍 -->
+        <div class="features">
+            <h2>✨ 工具特性</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>📊 智能分析</h4>
+                    <p>使用先进的NLP技术，自动识别文本中的核心主题和关键词，提供精准的分析结果。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔄 多种格式支持</h4>
+                    <p>支持文本文件、Excel表格和CSV文件，自动识别文本列，无需手动处理。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ 快速处理</h4>
+                    <p>优化的算法设计，即使处理大量数据也能保持高效，让您快速获得分析结果。</p>
+                </div>
+            </div>
+        </div>
+
         <!-- 文件格式说明 -->
         <div class="file-info">
             <h3>📁 支持的文件格式</h3>
@@ -193,10 +55,16 @@
         <!-- 文件上传表单 -->
         <div class="upload-section">
             <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-                <label for="file"><strong>选择要分析的文件：</strong></label><br><br>
-                <input type="file" name="file" id="file" required 
-                       accept=".txt,.xlsx,.xls,.csv">
-                <br>
+                <label for="file">选择要分析的文件：</label>
+                <div class="file-input-container">
+                    <input type="file" name="file" id="file" required 
+                           accept=".txt,.xlsx,.xls,.csv">
+                    <div class="file-input-placeholder">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>点击或拖拽文件到此处</p>
+                        <p>支持 .txt, .xlsx, .xls, .csv 格式</p>
+                    </div>
+                </div>
                 <button type="submit" id="analyzeBtn">🚀 开始分析</button>
             </form>
         </div>

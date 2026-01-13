@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-01-10T23:45:05.547584",
+  "model_path": "D:\\cwu\\job\\experence\\profession\\Mission3\\data\\models\\lda_model.pkl",
+  "performance_metrics": {
+    "perplexity": 21760558.23,
+    "coherence": 2.302,
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "recommendations": [
+    "模型性能稳定，无需立即更新",
+    "困惑度较高，建议调整模型参数",
+    "考虑减少主题数量，提高模型质量"
+  ]
+}

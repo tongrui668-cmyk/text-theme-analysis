@@ -1,0 +1,438 @@
+{
+  "2026-01-11T22:53:30.762983": {
+    "perplexity": 0.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:17:28.418138": {
+    "perplexity": 0.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:29:52.208577": {
+    "perplexity": 0.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:46:38.675868": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:46:38.692457": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:46:38.730547": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:57:12.105238": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:57:12.113188": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:57:12.139079": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-11T23:58:22.815776": {
+    "perplexity": 1.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:18:34.425644": {
+    "perplexity": Infinity,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:19:12.658332": {
+    "perplexity": Infinity,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:20:06.022836": {
+    "perplexity": 1000.0,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:27:27.451723": {
+    "perplexity": 21760558.229600493,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:27:27.459948": {
+    "perplexity": 21760558.229600493,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:27:27.482429": {
+    "perplexity": 21760558.229600493,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:27:44.716254": {
+    "perplexity": 21760558.229600493,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:31:03.765956": {
+    "perplexity": 21760558.229600493,
+    "coherence": 0.6473214285714284,
+    "topic_distribution": {
+      "n_topics": 7,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:49:49.422685": {
+    "perplexity": 3.5388300760933675e+42,
+    "coherence": 0.7444444444444446,
+    "topic_distribution": {
+      "n_topics": 6,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:49:49.445378": {
+    "perplexity": 3.5388300760933675e+42,
+    "coherence": 0.7444444444444446,
+    "topic_distribution": {
+      "n_topics": 6,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:49:49.471372": {
+    "perplexity": 3.5388300760933675e+42,
+    "coherence": 0.7444444444444446,
+    "topic_distribution": {
+      "n_topics": 6,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  },
+  "2026-01-13T17:50:27.777009": {
+    "perplexity": 3.5388300760933675e+42,
+    "coherence": 0.7444444444444446,
+    "topic_distribution": {
+      "n_topics": 6,
+      "topic_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "degradation": {
+      "detected": false,
+      "reasons": []
+    }
+  }
+}

@@ -94,15 +94,20 @@ class TextPreprocessor:
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         for line in f:
-                            word = line.strip()
-                            if word:
-                                stopwords.add(word)
+                            # 跳过注释行
+                            if line.strip().startswith('#'):
+                                continue
+                            # 分割空格分隔的词
+                            words = line.strip().split()
+                            for word in words:
+                                if word:
+                                    stopwords.add(word)
                     self.logger.info(f"加载停用词表: {file_path}, 词数: {len(stopwords)}")
                 except Exception as e:
                     log_error(e, f"加载停用词表失败: {file_path}")
         
         # 添加一些默认停用词
-        default_stopwords = {'的', '了', '在', '是', '我', '有', '和', '就', '不', '人', '都', '一', '一个', '上', '也', '很', '到', '说', '要', '去', '你', '会', '着', '没有', '看', '好', '自己', '这'}
+        default_stopwords = {'的', '了', '在', '是', '我', '有', '和', '就', '不', '人', '都', '一', '一个', '上', '也', '很', '到', '说', '要', '去', '你', '会', '着', '没有', '看', '好', '自己', '这', '只不过', '只是', '就是', '还是', '但是', '可是', '不过'}
         stopwords.update(default_stopwords)
         
         return stopwords
@@ -192,7 +197,81 @@ class TextPreprocessor:
         Returns:
             去除停用词后的词语列表
         """
-        return [word for word in words if word not in self.stopwords and len(word.strip()) > 0]
+        filtered_words = []
+        for word in words:
+            # 过滤停用词
+            if word in self.stopwords:
+                continue
+            # 过滤空白字符
+            if len(word.strip()) == 0:
+                continue
+            # 过滤重复语气词（如"哈哈哈哈"）
+            if self._is_repetitive_interjection(word):
+                continue
+            # 过滤单个字符（除了有意义的单字词）
+            if len(word) == 1 and not self._is_meaningful_single_char(word):
+                continue
+            filtered_words.append(word)
+        return filtered_words
+    
+    def _is_repetitive_interjection(self, word: str) -> bool:
+        """
+        检测是否为重复语气词
+        
+        Args:
+            word: 词语
+            
+        Returns:
+            是否为重复语气词
+        """
+        # 检查是否由相同字符重复组成
+        if len(word) > 2:
+            # 检查所有字符是否相同
+            if len(set(word)) == 1:
+                # 常见语气词字符
+                interjection_chars = {'哈', '呵', '嘿', '嘻', '哦', '啊', '呀', '呢', '吧', '啦', '嗯', '哦', '哟'}
+                if word[0] in interjection_chars:
+                    return True
+        return False
+    
+    def _is_meaningful_single_char(self, char: str) -> bool:
+        """
+        检测是否为有意义的单字词
+        
+        Args:
+            char: 字符
+            
+        Returns:
+            是否为有意义的单字词
+        """
+        # 有意义的单字词列表
+        meaningful_chars = {'好', '坏', '大', '小', '多', '少', '高', '低', '强', '弱', '真', '假'}
+        return char in meaningful_chars
+    
+    def remove_duplicate_phrases(self, words: List[str]) -> List[str]:
+        """
+        去除重复短语
+        
+        Args:
+            words: 词语列表
+            
+        Returns:
+            去除重复短语后的词语列表
+        """
+        if not words:
+            return []
+        
+        filtered_words = []
+        i = 0
+        while i < len(words):
+            # 检查当前词与下一个词是否重复
+            if i + 1 < len(words) and words[i] == words[i + 1]:
+                # 跳过重复的词
+                i += 2
+            else:
+                filtered_words.append(words[i])
+                i += 1
+        return filtered_words
     
     @log_function_call
     def preprocess(self, text: str) -> List[str]:
@@ -228,6 +307,10 @@ class TextPreprocessor:
         if not words:
             self.logger.warning("分词结果为空")
             return []
+        
+        # 去除重复短语
+        words = self.remove_duplicate_phrases(words)
+        self.logger.info(f"去重复短语后: {words}")
         
         # 去除停用词
         filtered_words = self.remove_stopwords(words)
